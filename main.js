@@ -69,13 +69,17 @@ function createGame() {
             let victory = checkForWin();
             if (victory === VictoryState.WIN) {
                 console.log("WIN");
+                return VictoryState.WIN;
             } else if (victory === VictoryState.TIE) {
                 console.log("TIE")
+                return VictoryState.TIE;
+            } else {
+                return VictoryState.NONE;
             }
         } else {
+            // return -1 if a disallowed gamemove is done (clicking on a filled square)
             return -1;
         }
-        console.log(board);
     }
     // Returns the current gameboard/gamestate
     const getBoard = () => {
@@ -121,6 +125,7 @@ function createRenderer(game, renderDiv, onClickFunction) {
 let playerX = createPlayer(SquareState.X);
 let playerO = createPlayer(SquareState.O);
 let players = [playerX, playerO];
+let playerTurn = 0;
 let game = createGame();
 const renderDiv = document.getElementById("render");
 console.log(renderDiv);
@@ -130,7 +135,11 @@ let renderer = createRenderer(game, renderDiv, (event) => {
     let x = Number(squareDiv.getAttribute("data-x"));
     let y = Number(squareDiv.getAttribute("data-y"));
     // TODO: Game progression :)
-    let status = game.doTurn(playerX, x, y);
+    let status = game.doTurn(players[playerTurn], x, y);
+    if (status !== -1) {
+        // Use modulo to easily rotate through player indices
+        playerTurn = (playerTurn + 1) % 2;
+    }
     renderer.render();
 });
 renderer.render();
