@@ -130,8 +130,9 @@ let playerTurn = 0;
 let game = createGame();
 const renderDiv = document.getElementById("render");
 const statusElement = document.getElementById("status");
+const restartButton = document.getElementById("restart");
 console.log(renderDiv);
-let renderer = createRenderer(game, renderDiv, (event) => {
+const boardListener = (event) => {
     let squareDiv = event.target;
     console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
     let x = Number(squareDiv.getAttribute("data-x"));
@@ -148,5 +149,15 @@ let renderer = createRenderer(game, renderDiv, (event) => {
         }
     }
     renderer.render();
-});
+}
+let renderer = createRenderer(game, renderDiv, boardListener);
+statusElement.textContent = "It is " + players[playerTurn].name + "'s turn";
 renderer.render();
+
+restartButton.addEventListener("click", () => {
+    game = createGame();
+    renderer = createRenderer(game, renderDiv, boardListener);
+    renderer.render();
+    playerTurn = 0;
+    statusElement.textContent = "It is " + players[playerTurn].name + "'s turn";
+})
