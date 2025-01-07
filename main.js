@@ -161,3 +161,15 @@ restartButton.addEventListener("click", () => {
     playerTurn = 0;
     statusElement.textContent = "It is " + players[playerTurn].name + "'s turn";
 })
+
+const player1form = document.getElementById("player1name");
+const player2form = document.getElementById("player2name");
+player1form.addEventListener("input", (event) => {
+    let name = event.target.value;
+    playerX.name = name;
+})
+
+player2form.addEventListener("input", (event) => {
+    let name = event.target.value;
+    playerO.name = name;
+})
