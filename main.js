@@ -128,17 +128,31 @@ let players = [playerX, playerO];
 let playerTurn = 0;
 let game = createGame();
 const renderDiv = document.getElementById("render");
+const statusElement = document.getElementById("status");
 console.log(renderDiv);
 let renderer = createRenderer(game, renderDiv, (event) => {
     let squareDiv = event.target;
     console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
     let x = Number(squareDiv.getAttribute("data-x"));
     let y = Number(squareDiv.getAttribute("data-y"));
-    // TODO: Game progression :)
     let status = game.doTurn(players[playerTurn], x, y);
     if (status !== -1) {
-        // Use modulo to easily rotate through player indices
-        playerTurn = (playerTurn + 1) % 2;
+        if (status === VictoryState.WIN) {
+            switch (players[playerTurn].type) {
+                case SquareState.X:
+                    statusElement.textContent = "Player X wins!";
+                    break;
+                case SquareState.O:
+                    statusElement.textContent = "Player O wins!";
+                    break;
+                default:
+                    console.log("Something has gone very wrong with victory checking!");
+            }
+        } else if (status === VictoryState.TIE) {
+           statusElement.textContent = "It's a tie!";
+        } else {
+            playerTurn = (playerTurn + 1) % 2;
+        }
     }
     renderer.render();
 });
