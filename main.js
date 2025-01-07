@@ -144,6 +144,7 @@ let renderer = createRenderer(game, renderDiv, (event) => {
            statusElement.textContent = "It's a tie!";
         } else {
             playerTurn = (playerTurn + 1) % 2;
+            statusElement.textContent = "It is " + players[playerTurn].name + "'s turn";
         }
     }
     renderer.render();
