@@ -12,10 +12,11 @@ const VictoryState = {
 }
 
 // squareType refers to the square the player places (X or O)
-function createPlayer(squareType) {
+function createPlayer(playerName, squareType) {
+    let name = playerName;
     let type = squareType;
     let score = 0;
-    return {type, score};
+    return {name, type, score};
 };
 
 function createGame() {
@@ -122,8 +123,8 @@ function createRenderer(game, renderDiv, onClickFunction) {
 
 
 
-let playerX = createPlayer(SquareState.X);
-let playerO = createPlayer(SquareState.O);
+let playerX = createPlayer("X", SquareState.X);
+let playerO = createPlayer("O", SquareState.O);
 let players = [playerX, playerO];
 let playerTurn = 0;
 let game = createGame();
@@ -138,16 +139,7 @@ let renderer = createRenderer(game, renderDiv, (event) => {
     let status = game.doTurn(players[playerTurn], x, y);
     if (status !== -1) {
         if (status === VictoryState.WIN) {
-            switch (players[playerTurn].type) {
-                case SquareState.X:
-                    statusElement.textContent = "Player X wins!";
-                    break;
-                case SquareState.O:
-                    statusElement.textContent = "Player O wins!";
-                    break;
-                default:
-                    console.log("Something has gone very wrong with victory checking!");
-            }
+            statusElement.textContent = "Player " + players[playerTurn].name + " wins!";
         } else if (status === VictoryState.TIE) {
            statusElement.textContent = "It's a tie!";
         } else {
