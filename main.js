@@ -81,13 +81,41 @@ function createGame() {
     const getBoard = () => {
         return {board};
     }
+
+    return {getBoard, doTurn, checkForWin};
 }
 
-function createRenderer() {
+// Create the renderer function
+function createRenderer(game, renderDiv) {
+    const render = () => {
+        let gameState = game.getBoard();
+        for (let i=0; i < 3; i++) {
+            for (let j=0; j < 3; j++) {
+                const div = document.createElement("div");
+                div.className = "square";
+                switch (gameState.board[j][i]) {
+                    case SquareState.O:
+                        div.textContent = "O";
+                        break;
+                    case SquareState.X:
+                        div.textContent = "X";
+                        break;
+                    default:
+                        div.textContent = "";
+                }
+                renderDiv.appendChild(div)
+            }
+        }
+    }
 
+    return {render};
 }
 
 let playerX = createPlayer(SquareState.X);
 let playerO = createPlayer(SquareState.O);
 let players = [playerX, playerO];
 let game = createGame();
+const renderDiv = document.getElementById("render");
+console.log(renderDiv);
+let renderer = createRenderer(game, renderDiv);
+renderer.render();
