@@ -9,3 +9,8 @@
     border-width: 1px;
     border-style: solid;
 }
+
+form {
+    display: grid;
+    grid-template-columns: 120px 240px;
+}
