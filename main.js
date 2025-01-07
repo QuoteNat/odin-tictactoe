@@ -89,12 +89,14 @@ function createGame() {
 function createRenderer(game, renderDiv, onClickFunction) {
     const render = () => {
         let gameState = game.getBoard();
+        // clear the renderDiv
+        renderDiv.textContent = '';
         for (let i=0; i < 3; i++) {
             for (let j=0; j < 3; j++) {
                 const div = document.createElement("div");
                 div.className = "square";
-                div.setAttribute("data-y", i);
-                div.setAttribute("data-x", j);
+                div.setAttribute("data-x", i);
+                div.setAttribute("data-y", j);
                 switch (gameState.board[j][i]) {
                     case SquareState.O:
                         div.textContent = "O";
@@ -127,6 +129,8 @@ let renderer = createRenderer(game, renderDiv, (event) => {
     console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
     let x = Number(squareDiv.getAttribute("data-x"));
     let y = Number(squareDiv.getAttribute("data-y"));
-    // let status = doTurn
+    // TODO: Game progression :)
+    let status = game.doTurn(playerX, x, y);
+    renderer.render();
 });
 renderer.render();
