@@ -93,6 +93,8 @@ function createRenderer(game, renderDiv) {
             for (let j=0; j < 3; j++) {
                 const div = document.createElement("div");
                 div.className = "square";
+                div.setAttribute("data-y", i);
+                div.setAttribute("data-x", j);
                 switch (gameState.board[j][i]) {
                     case SquareState.O:
                         div.textContent = "O";
