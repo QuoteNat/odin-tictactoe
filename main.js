@@ -114,10 +114,7 @@ function createRenderer(game, renderDiv, onClickFunction) {
     return {render}; callback
 }
 
-function onClickSquare(event) {
-    let squareDiv = event.target;
-    console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
-}
+
 
 let playerX = createPlayer(SquareState.X);
 let playerO = createPlayer(SquareState.O);
@@ -125,5 +122,11 @@ let players = [playerX, playerO];
 let game = createGame();
 const renderDiv = document.getElementById("render");
 console.log(renderDiv);
-let renderer = createRenderer(game, renderDiv, onClickSquare);
+let renderer = createRenderer(game, renderDiv, (event) => {
+    let squareDiv = event.target;
+    console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
+    let x = Number(squareDiv.getAttribute("data-x"));
+    let y = Number(squareDiv.getAttribute("data-y"));
+    // let status = doTurn
+});
 renderer.render();
