@@ -86,7 +86,7 @@ function createGame() {
 }
 
 // Create the renderer function
-function createRenderer(game, renderDiv) {
+function createRenderer(game, renderDiv, onClickFunction) {
     const render = () => {
         let gameState = game.getBoard();
         for (let i=0; i < 3; i++) {
@@ -105,12 +105,18 @@ function createRenderer(game, renderDiv) {
                     default:
                         div.textContent = "";
                 }
-                renderDiv.appendChild(div)
+                div.addEventListener("click", onClickFunction);
+                renderDiv.appendChild(div);
             }
         }
     }
 
-    return {render};
+    return {render}; callback
+}
+
+function onClickSquare(event) {
+    let squareDiv = event.target;
+    console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
 }
 
 let playerX = createPlayer(SquareState.X);
@@ -119,5 +125,5 @@ let players = [playerX, playerO];
 let game = createGame();
 const renderDiv = document.getElementById("render");
 console.log(renderDiv);
-let renderer = createRenderer(game, renderDiv);
+let renderer = createRenderer(game, renderDiv, onClickSquare);
 renderer.render();
