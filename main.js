@@ -62,8 +62,6 @@ function createGame() {
         }
     }
 
-    console.log(board);
-    let currentPlayerState = SquareState.X;
     const doTurn = (player, x, y) => {
         if (y >= 0 && y < 3 && x >= 0 && x <= 3 && board[y][x] === SquareState.EMPTY) {
             board[y][x] = player.type;
@@ -74,10 +72,19 @@ function createGame() {
             } else if (victory === VictoryState.TIE) {
                 console.log("TIE")
             }
+        } else {
+            return -1;
         }
         console.log(board);
     }
-    return {doTurn};
+    // Returns the current gameboard/gamestate
+    const getBoard = () => {
+        return {board};
+    }
+}
+
+function createRenderer() {
+
 }
 
 let playerX = createPlayer(SquareState.X);
