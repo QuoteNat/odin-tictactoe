@@ -40,9 +40,7 @@ function createGame() {
 
         // Win case 1: Same values in a row
         for (row in board) {
-            console.log(row);
             if (board[row][0] != SquareState.EMPTY && board[row][0] == board[row][1] && board[row][0] == board[row][2]) {
-                console.log ("Win via case 1")
                 return VictoryState.WIN;
             }
         }
@@ -69,10 +67,8 @@ function createGame() {
             turnsDone++;
             let victory = checkForWin();
             if (victory === VictoryState.WIN) {
-                console.log("WIN");
                 return VictoryState.WIN;
             } else if (victory === VictoryState.TIE) {
-                console.log("TIE")
                 return VictoryState.TIE;
             } else {
                 return VictoryState.NONE;
@@ -131,10 +127,8 @@ let game = createGame();
 const renderDiv = document.getElementById("render");
 const statusElement = document.getElementById("status");
 const restartButton = document.getElementById("restart");
-console.log(renderDiv);
 const boardListener = (event) => {
     let squareDiv = event.target;
-    console.log(squareDiv.getAttribute("data-x") + " " + squareDiv.getAttribute("data-y"));
     let x = Number(squareDiv.getAttribute("data-x"));
     let y = Number(squareDiv.getAttribute("data-y"));
     let status = game.doTurn(players[playerTurn], x, y);
